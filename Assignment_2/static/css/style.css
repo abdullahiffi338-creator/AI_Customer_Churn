@@ -1,0 +1,447 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --ink: #192431;
+  --muted: #647181;
+  --line: #dce2e8;
+  --navy: #193e57;
+  --navyd: #102d42;
+  --bg: #f4f6f8;
+  --green: #1e684c;
+  --red: #8c302b;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.55 "Segoe UI", Arial, sans-serif;
+}
+
+/* ==========================================================================
+   2. Header & Navigation
+   ========================================================================== */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 15px max(5vw, 22px);
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand b,
+.brand small {
+  display: block;
+}
+
+.brand b {
+  font-size: 15px;
+}
+
+.brand small {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.mark {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  background: var(--navy);
+  color: white;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+nav {
+  display: flex;
+  gap: 24px;
+}
+
+nav a {
+  font-size: 13px;
+  text-decoration: none;
+  color: #4b5868;
+  font-weight: 700;
+  border-bottom: 2px solid transparent;
+  padding: 9px 0;
+}
+
+nav a:hover {
+  color: var(--navy);
+  border-color: var(--navy);
+}
+
+/* ==========================================================================
+   3. Layout & Typography
+   ========================================================================== */
+main {
+  max-width: 1060px;
+  margin: auto;
+  padding: 40px 22px 58px;
+}
+
+.intro {
+  max-width: 710px;
+  margin-bottom: 25px;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--navy);
+  margin: 0 0 8px;
+}
+
+h1, h2, legend {
+  line-height: 1.2;
+  letter-spacing: -.4px;
+}
+
+h1 {
+  font-size: clamp(30px, 4vw, 42px);
+  margin: 0 0 12px;
+}
+
+.intro > p:last-child {
+  font-size: 16px;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* ==========================================================================
+   4. Containers (Forms & Content Blocks)
+   ========================================================================== */
+.form,
+.result,
+.method,
+.legal,
+.errors {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+}
+
+/* Form Styles */
+.form {
+  padding: 27px;
+}
+
+.formhead {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.formhead h2 {
+  font-size: 22px;
+  margin: 0 0 5px;
+}
+
+.formhead p {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0;
+}
+
+.formhead small {
+  color: var(--muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+fieldset {
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  padding: 23px 0;
+  margin: 0;
+}
+
+legend {
+  font-weight: 800;
+  font-size: 16px;
+  padding: 0 0 15px;
+}
+
+/* Grid & Fields */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 17px 15px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+label {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+input,
+select {
+  min-height: 42px;
+  width: 100%;
+  border: 1px solid #c9d2db;
+  border-radius: 4px;
+  background: white;
+  color: var(--ink);
+  font: inherit;
+  font-size: 13px;
+  padding: 9px 10px;
+}
+
+input:focus,
+select:focus,
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #a8c8da;
+  outline-offset: 2px;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding-top: 22px;
+}
+
+.actions p {
+  max-width: 560px;
+  color: var(--muted);
+  font-size: 12px;
+  margin: 0;
+}
+
+button {
+  background: var(--navy);
+  color: #fff;
+  border: 0;
+  border-radius: 4px;
+  padding: 13px 16px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+button:hover {
+  background: var(--navyd);
+}
+
+button span {
+  font-size: 17px;
+  margin-left: 8px;
+}
+
+/* ==========================================================================
+   5. Components (Results, Errors, Info Blocks)
+   ========================================================================== */
+/* Results Dashboard */
+.result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  padding: 22px 24px;
+  margin-bottom: 18px;
+  border-left: 4px solid var(--green);
+}
+
+.result.risk {
+  border-left-color: var(--red);
+}
+
+.result h2 {
+  font-size: 23px;
+  margin: 0 0 7px;
+}
+
+.result p:last-child {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.prob {
+  min-width: 210px;
+}
+
+.prob span {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.prob strong {
+  font-size: 30px;
+}
+
+.track {
+  height: 7px;
+  background: #e6ebef;
+  margin-top: 8px;
+}
+
+.track i {
+  display: block;
+  height: 100%;
+  background: var(--green);
+}
+
+.risk .track i {
+  background: var(--red);
+}
+
+/* Errors */
+.errors {
+  padding: 17px 20px;
+  margin-bottom: 17px;
+  border-color: #e8b8b3;
+  background: #fff3f1;
+  color: #712b27;
+}
+
+.errors ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+  font-size: 13px;
+}
+
+/* Informational & Legal Blocks */
+.method {
+  padding: 20px 23px;
+  margin-top: 19px;
+}
+
+.method h2 {
+  font-size: 17px;
+  margin: 0 0 8px;
+}
+
+.method p {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.legal {
+  max-width: 800px;
+  margin: auto;
+  padding: 30px 34px;
+}
+
+.legal h2 {
+  font-size: 18px;
+  margin: 25px 0 8px;
+}
+
+.legal p:not(.eyebrow) {
+  font-size: 14px;
+  color: #4e5a69;
+}
+
+.muted {
+  font-size: 12px;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 17px;
+}
+
+/* Footer */
+.site-footer {
+  background: #fff;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 18px max(5vw, 22px);
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* ==========================================================================
+   6. Media Queries (Responsiveness)
+   ========================================================================== */
+@media (max-width: 750px) {
+  .header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  nav {
+    gap: 19px;
+    flex-wrap: wrap;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .result {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .prob {
+    width: 100%;
+  }
+
+  .actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .site-footer {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 470px) {
+  main {
+    padding: 27px 13px 40px;
+  }
+
+  .form {
+    padding: 17px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .formhead {
+    flex-direction: column;
+  }
+
+  .legal {
+    padding: 22px 18px;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+}

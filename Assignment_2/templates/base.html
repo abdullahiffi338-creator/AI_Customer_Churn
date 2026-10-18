@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Telecom customer churn prediction academic application">
+  <title>{% block title %}Telco Churn Predictor{% endblock %}</title>
+  
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='images/favicon.svg') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <header class="header">
+    <a class="brand" href="{{ url_for('index') }}">
+      <span class="mark">TC</span>
+      <span>
+        <b>Telco Churn Predictor</b>
+        <small>Customer retention analysis</small>
+      </span>
+    </a>
+    <nav>
+      <a href="{{ url_for('index') }}">Predict churn</a>
+      <a href="{{ url_for('privacy') }}">Privacy</a>
+      <a href="{{ url_for('terms') }}">Terms</a>
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <span>Academic machine-learning project</span>
+    <span>Predictions are estimates, not guarantees.</span>
+  </footer>
+
+</body>
+</html>

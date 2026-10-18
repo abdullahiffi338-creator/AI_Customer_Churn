@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}Customer Churn Prediction{% endblock %}
+
+{% block content %}
+  <!-- 1. Introduction Header -->
+  <section class="intro">
+    <p class="eyebrow">CUSTOMER ANALYSIS</p>
+    <h1>Estimate customer churn risk</h1>
+    <p>Enter a customer's service, contract, tenure and billing details to receive a prediction from the trained classification model.</p>
+  </section>
+
+  <!-- 2. Error Alerts -->
+  {% if errors %}
+    <section class="errors" role="alert">
+      <b>Check the following details</b>
+      <ul>
+        {% for e in errors %}
+          <li>{{ e }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+
+  <!-- 3. Prediction Results -->
+  {% if result %}
+    <section class="result {% if result.churn %}risk{% else %}stable{% endif %}" aria-live="polite">
+      <div>
+        <p class="eyebrow">MODEL RESULT</p>
+        <h2>{{ result.label }}</h2>
+        <p>
+          {% if result.churn %}
+            The model classifies this record as churn. Review the customer's circumstances before deciding on action.
+          {% else %}
+            The model classifies this record as no churn. This estimate is based on patterns in the training data.
+          {% endif %}
+        </p>
+      </div>
+      <div class="prob">
+        <span>Estimated churn probability</span>
+        <strong>{{ result.probability }}%</strong>
+        <div class="track">
+          <i style="width: {{ result.probability }}%"></i>
+        </div>
+      </div>
+    </section>
+  {% endif %}
+
+  <!-- 4. Dynamic Data Input Form -->
+  <form class="form" method="post">
+    <div class="formhead">
+      <div>
+        <h2>Customer details</h2>
+        <p>Complete the fields used by the model.</p>
+      </div>
+      <small>All fields required</small>
+    </div>
+
+    {% for section, fields in [
+      ("Customer profile", [
+        ("gender", "Gender"),
+        ("SeniorCitizen", "Senior citizen"),
+        ("Partner", "Has partner"),
+        ("Dependents", "Has dependents")
+      ]),
+      ("Subscribed services", [
+        ("PhoneService", "Phone service"),
+        ("MultipleLines", "Multiple lines"),
+        ("InternetService", "Internet service"),
+        ("OnlineSecurity", "Online security"),
+        ("OnlineBackup", "Online backup"),
+        ("DeviceProtection", "Device protection"),
+        ("TechSupport", "Technical support"),
+        ("StreamingTV", "Streaming TV"),
+        ("StreamingMovies", "Streaming movies")
+      ]),
+      ("Contract and billing", [
+        ("Contract", "Contract type"),
+        ("PaperlessBilling", "Paperless billing"),
+        ("PaymentMethod", "Payment method")
+      ])
+    ] %}
+      <fieldset>
+        <legend>{{ section }}</legend>
+        <div class="grid">
+          
+          <!-- Loop through defined categoricals -->
+          {% for key, label in fields %}
+            <div class="field">
+              <label for="{{ key }}">{{ label }}</label>
+              <select id="{{ key }}" name="{{ key }}" required>
+                {% for opt in options[key] %}
+                  {% if opt is sequence and opt is not string %}
+                    <option value="{{ opt[0] }}" {% if values.get(key) == opt[0] %}selected{% endif %}>
+                      {{ opt[1] }}
+                    </option>
+                  {% else %}
+                    <option value="{{ opt }}" {% if values.get(key) == opt %}selected{% endif %}>
+                      {{ opt }}
+                    </option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+          {% endfor %}
+
+          <!-- Inline Numeric continuous values -->
+          {% if section == "Contract and billing" %}
+            <div class="field">
+              <label for="tenure">Tenure (months)</label>
+              <input id="tenure" name="tenure" type="number" min="0" max="72" step="1" value="{{ values.get('tenure', '12') }}" required>
+            </div>
+            <div class="field">
+              <label for="MonthlyCharges">Monthly charges</label>
+              <input id="MonthlyCharges" name="MonthlyCharges" type="number" min="0" max="10000" step=".01" value="{{ values.get('MonthlyCharges', '85.50') }}" required>
+            </div>
+            <div class="field">
+              <label for="TotalCharges">Total charges</label>
+              <input id="TotalCharges" name="TotalCharges" type="number" min="0" max="1000000" step=".01" value="{{ values.get('TotalCharges', '1026.00') }}" required>
+            </div>
+          {% endif %}
+
+        </div>
+      </fieldset>
+    {% endfor %}
+
+    <!-- Form Action Buttons -->
+    <div class="actions">
+      <p>Predictions are estimates and do not guarantee future customer behaviour. Avoid entering personally identifying customer information.</p>
+      <button type="submit">Run churn prediction <span>→</span></button>
+    </div>
+  </form>
+
+  <!-- 5. Academic Methodology Documentation -->
+  <section class="method">
+    <h2>How the prediction works</h2>
+    <p>
+      The form sends customer features to Flask. The saved scikit-learn pipeline applies the same scaling and categorical encoding used during training
+      {%- if info.selected_model -%}
+        before {{ info.selected_model }} produces a result. In Assignment 1, {{ info.selected_model }} was selected because it had the higher F1-score ({{ '%.2f'|format(info.results[info.selected_model].f1) }} on the held-out test set)
+      {%- endif -%}.
+    </p>
+  </section>
+{% endblock %}
